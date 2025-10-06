@@ -1,0 +1,42 @@
+{
+  "name": "IQKeyboardManagerObjC",
+  "version": "6.5.19",
+  "source": {
+    "git": "https://github.com/hackiftekhar/IQKeyboardManagerObjC.git",
+    "tag": "7.0.3"
+  },
+  "summary": "Codeless drop-in universal library allows to prevent issues of keyboard sliding up and cover UITextField/UITextView.",
+  "homepage": "https://github.com/hackiftekhar/IQKeyboardManagerObjC",
+  "screenshots": "https://raw.githubusercontent.com/hackiftekhar/IQKeyboardManagerObjC/master/Screenshot/IQKeyboardManagerScreenshot.png",
+  "license": "MIT",
+  "authors": {
+    "Iftekhar Qurashi": "hack.iftekhar@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source_files": "IQKeyboardManagerObjC/**/*.{h,m}",
+  "resource_bundles": {"IQKeyboardManager": "IQKeyboardManagerObjC/PrivacyInfo.xcprivacy"},
+  "public_header_files": [
+      "IQKeyboardManagerObjC/IQKeyboardManager.h",
+      "IQKeyboardManagerObjC/IQKeyboardReturnKeyHandler.h",
+      "IQKeyboardManagerObjC/Categories/IQUIScrollView+Additions.h",
+      "IQKeyboardManagerObjC/Categories/IQUITextFieldView+Additions.h",
+      "IQKeyboardManagerObjC/Categories/IQUIView+Hierarchy.h",
+      "IQKeyboardManagerObjC/Categories/IQUIViewController+Additions.h",
+      "IQKeyboardManagerObjC/Constants/IQKeyboardManagerConstants.h",
+      "IQKeyboardManagerObjC/IQTextView/IQTextView.h",
+      "IQKeyboardManagerObjC/IQToolbar/IQBarButtonItem.h",
+      "IQKeyboardManagerObjC/IQToolbar/IQPreviousNextView.h",
+      "IQKeyboardManagerObjC/IQToolbar/IQTitleBarButtonItem.h",
+      "IQKeyboardManagerObjC/IQToolbar/IQToolbar.h",
+      "IQKeyboardManagerObjC/IQToolbar/IQUIView+IQKeyboardToolbar.h"
+  ],
+  "frameworks": [
+    "UIKit",
+    "Foundation",
+    "CoreGraphics",
+    "QuartzCore"
+  ],
+  "requires_arc": true
+}

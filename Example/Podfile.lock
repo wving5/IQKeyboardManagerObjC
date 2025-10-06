@@ -1,0 +1,23 @@
+PODS:
+  - IQDropDownTextField (4.0.4)
+  - IQKeyboardManagerObjC (6.5.19)
+
+DEPENDENCIES:
+  - IQDropDownTextField
+  - IQKeyboardManagerObjC (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - IQDropDownTextField
+
+EXTERNAL SOURCES:
+  IQKeyboardManagerObjC:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  IQDropDownTextField: 3cce52d039b32c6cfa44c6a7603e949c1df4c7c3
+  IQKeyboardManagerObjC: 2f147c5f0165bff19cf2acb896ad6bc68bebe714
+
+PODFILE CHECKSUM: 2eb1dd5134437dbc8e2574dd5c63dd95e9d136c3
+
+COCOAPODS: 1.16.2

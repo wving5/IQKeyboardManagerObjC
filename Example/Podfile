@@ -1,0 +1,9 @@
+project "IQKeyboardManagerObjCExample.xcodeproj"
+
+target "IQKeyboardManagerObjCExample" do
+  use_frameworks!
+  platform :ios, "15.0"
+
+  pod "IQDropDownTextField"
+  pod "IQKeyboardManagerObjC", :path => '../'
+end
