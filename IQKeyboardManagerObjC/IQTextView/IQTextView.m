@@ -171,16 +171,8 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
         _placeholderLabel.textAlignment = self.textAlignment;
         _placeholderLabel.backgroundColor = [UIColor clearColor];
         _placeholderLabel.isAccessibilityElement = NO;
-        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-            if (@available(iOS 13.0, *))
-            {
-                _placeholderLabel.textColor = [UIColor placeholderTextColor];
-            }
-            else
-        #endif
-            {
-                _placeholderLabel.textColor = [UIColor lightTextColor];
-            }
+        _placeholderLabel.textColor = [UIColor placeholderTextColor];
+
         _placeholderLabel.alpha = 0;
         [self addSubview:_placeholderLabel];
     }

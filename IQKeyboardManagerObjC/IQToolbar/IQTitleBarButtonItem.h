@@ -23,8 +23,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <IQKeyboardManagerObjC/IQKeyboardManagerConstants.h>
-#import <IQKeyboardManagerObjC/IQBarButtonItem.h>
+#import "IQKeyboardManagerConstants.h"
+#import "IQBarButtonItem.h"
 
 
 /**

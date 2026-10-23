@@ -585,32 +585,21 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
         /*  (Bug ID: #23, #25, #73)   */
         UIWindow *originalKeyWindow = nil;
 
-        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-        if (@available(iOS 13.0, *))
+        NSSet<UIScene *> *connectedScenes = [UIApplication sharedApplication].connectedScenes;
+        for (UIScene *scene in connectedScenes)
         {
-            NSSet<UIScene *> *connectedScenes = [UIApplication sharedApplication].connectedScenes;
-            for (UIScene *scene in connectedScenes)
+            if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]])
             {
-                if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]])
+                UIWindowScene *windowScene = (UIWindowScene *)scene;
+                for (UIWindow *window in windowScene.windows)
                 {
-                    UIWindowScene *windowScene = (UIWindowScene *)scene;
-                    for (UIWindow *window in windowScene.windows)
+                    if (window.isKeyWindow)
                     {
-                        if (window.isKeyWindow)
-                        {
-                            originalKeyWindow = window;
-                            break;
-                        }
+                        originalKeyWindow = window;
+                        break;
                     }
                 }
             }
-        }
-        else
-        #endif
-        {
-        #if __IPHONE_OS_VERSION_MIN_REQUIRED < 130000
-            originalKeyWindow = [UIApplication sharedApplication].keyWindow;
-        #endif
         }
 
         //If original key window is not nil and the cached keyWindow is also not original keyWindow then changing keyWindow.
@@ -728,21 +717,7 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
     }
     else
     {
-        CGFloat statusBarHeight = 0;
-    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-        if (@available(iOS 13.0, *))
-        {
-            statusBarHeight = [self keyWindow].windowScene.statusBarManager.statusBarFrame.size.height;
-
-        }
-        else
-    #endif
-        {
-    #if __IPHONE_OS_VERSION_MIN_REQUIRED < 130000
-            statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    #endif
-        }
-
+        CGFloat statusBarHeight = [self keyWindow].windowScene.statusBarManager.statusBarFrame.size.height;
         navigationBarAreaHeight = statusBarHeight;
     }
 
@@ -885,18 +860,8 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
             strongLastScrollView = _lastScrollView;
             _startingContentInsets = superScrollView.contentInset;
             _startingContentOffset = superScrollView.contentOffset;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110100
-            if (@available(iOS 11.1, *))
-            {
-                _startingScrollIndicatorInsets = superScrollView.verticalScrollIndicatorInsets;
-            }
-            else
-#endif
-            {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 110100
-                _startingScrollIndicatorInsets = superScrollView.scrollIndicatorInsets;
-#endif
-            }
+            _startingScrollIndicatorInsets = superScrollView.verticalScrollIndicatorInsets;
+
 
             [self showLog:[NSString stringWithFormat:@"Saving New contentInset: %@ and contentOffset : %@",NSStringFromUIEdgeInsets(_startingContentInsets),NSStringFromCGPoint(_startingContentOffset)]];
         }
@@ -909,18 +874,7 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
         strongLastScrollView = _lastScrollView;
         _startingContentInsets = superScrollView.contentInset;
         _startingContentOffset = superScrollView.contentOffset;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110100
-        if (@available(iOS 11.1, *))
-        {
-            _startingScrollIndicatorInsets = superScrollView.verticalScrollIndicatorInsets;
-        }
-        else
-#endif
-        {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 110100
-            _startingScrollIndicatorInsets = superScrollView.scrollIndicatorInsets;
-#endif
-        }
+        _startingScrollIndicatorInsets = superScrollView.verticalScrollIndicatorInsets;
 
         [self showLog:[NSString stringWithFormat:@"Saving contentInset: %@ and contentOffset : %@",NSStringFromUIEdgeInsets(_startingContentInsets),NSStringFromCGPoint(_startingContentOffset)]];
     }
@@ -1134,18 +1088,7 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
                         
                         strongLastScrollView.contentInset = movedInsets;
                         UIEdgeInsets newScrollIndicatorInset;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110100
-                        if (@available(iOS 11.1, *))
-                        {
-                            newScrollIndicatorInset = strongLastScrollView.verticalScrollIndicatorInsets;
-                        }
-                        else
-#endif
-                        {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 110100
-                            newScrollIndicatorInset = strongLastScrollView.scrollIndicatorInsets;
-#endif
-                        }
+                        newScrollIndicatorInset = strongLastScrollView.verticalScrollIndicatorInsets;
 
                         newScrollIndicatorInset.bottom = bottomScrollIndicatorInset;
                         strongLastScrollView.scrollIndicatorInsets = newScrollIndicatorInset;
@@ -1180,18 +1123,7 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
                 {
                     self.startingTextViewContentInsets = textView.contentInset;
                     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110100
-                    if (@available(iOS 11.1, *))
-                    {
-                        self.startingTextViewScrollIndicatorInsets = textView.verticalScrollIndicatorInsets;
-                    }
-                    else
-#endif
-                    {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 110100
-                        self.startingTextViewScrollIndicatorInsets = textView.scrollIndicatorInsets;
-#endif
-                    }
+                    self.startingTextViewScrollIndicatorInsets = textView.verticalScrollIndicatorInsets;
                 }
 
                 CGFloat bottomInset = textFieldView.frame.size.height-textViewHeight;
@@ -1776,20 +1708,7 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
 /**  UIApplicationWillChangeStatusBarOrientationNotification. Need to set the textView to it's original position. If any frame changes made. (Bug ID: #92)*/
 - (void)willChangeStatusBarOrientation:(NSNotification*)aNotification
 {
-    UIInterfaceOrientation currentStatusBarOrientation = UIInterfaceOrientationUnknown;
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 130000
-    if (@available(iOS 13.0, *))
-    {
-        currentStatusBarOrientation = [self keyWindow].windowScene.interfaceOrientation;
-    }
-    else
-#endif
-    {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 130000
-        currentStatusBarOrientation = UIApplication.sharedApplication.statusBarOrientation;
-#endif
-    }
+    UIInterfaceOrientation currentStatusBarOrientation = [self keyWindow].windowScene.interfaceOrientation;
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -1868,13 +1787,6 @@ NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
         }
     }
 
-    // (Issue #2109) Ignore Apple Pencil touches to prevent conflicts with floating keyboard on iPad
-    if (@available(iOS 9.1, *)) {
-        if (touch.type == UITouchTypePencil) {
-            return NO;
-        }
-    }
-    
     return YES;
 }
 

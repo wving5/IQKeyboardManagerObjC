@@ -23,7 +23,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <IQKeyboardManagerObjC/IQToolbar.h>
+#import "IQToolbar.h"
 
 
 NS_EXTENSION_UNAVAILABLE_IOS("Unavailable in extension")
